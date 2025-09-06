@@ -3,7 +3,7 @@ import pygame
 from PIL import Image
 
 # Configuration
-IMAGE_FILE = "images/walking.png"  # Single image file
+IMAGE_FILE = "images/elon-camera.png"  # Single image file
 FRAME_DELAY = 500  # Delay between frames in milliseconds
 GRID_SIZE = (4, 4)  # 4x4 grid
 
@@ -24,9 +24,12 @@ def crop_image(image_path, grid_size):
             lower = upper + cell_height
             cropped_image = image.crop((left, upper, right, lower))
 
+            # Resize the cropped image to be 3x larger
+            resized_image = cropped_image.resize((cell_width * 3, cell_height * 3))
+
             # Convert to a format pygame can use
             cropped_images.append(pygame.image.fromstring(
-                cropped_image.tobytes(), cropped_image.size, cropped_image.mode
+                resized_image.tobytes(), resized_image.size, resized_image.mode
             ))
 
     return cropped_images
